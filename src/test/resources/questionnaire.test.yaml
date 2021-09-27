@@ -1,0 +1,27 @@
+---
+title: "Questionnaire tests"
+validator:
+  version: '4.0'
+  "ig": [
+      "fhir-profiles"
+  ]
+tests:
+  - title: "Expecting 2 errors and finds 2"
+    source: "fhir-instances/questionnaireResponse-instance.json"
+    expectedIssues:
+      - severity: ERROR
+        code: INFORMATION
+        message: Items not of type group should not have items outside answers (use answer.item not .item)
+        expression: QuestionnaireResponse.item[0]
+      - severity: ERROR
+        message: "Answer value must be of type boolean"
+        expression: "QuestionnaireResponse.item[0].item[0].answer[0].value.ofType(string)"
+  - title: "Expecting 2 errors and 1 warning but only finds 2 errors"
+    source: "fhir-instances/questionnaireResponse-instance.json"
+    expectedIssues:
+      - severity: ERROR
+      - severity: ERROR
+      - severity: WARNING
+    tags:
+      - "my-tag1"
+      - "my-tag2"

@@ -1,0 +1,78 @@
+{
+  "resourceType": "ImplementationGuide",
+  "id": "nav.no.messaging.core.r4",
+  "url": "http://fhir.nav.no/ImplementationGuide/nav.no.messaging.core.r4",
+  "version": "0.1.0",
+  "name": "MessagingCore",
+  "status": "draft",
+  "publisher": "Norwegian Labour and Welfare Administration (NAV)",
+  "contact": [
+    {
+      "name": "Norwegian Labour and Welfare Administration (NAV)",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "https://github.com/navikt/fhir"
+        }
+      ]
+    }
+  ],
+  "description": "An IG containing the base messaging profiles.",
+  "packageId": "nav.no.messaging.core.r4",
+  "fhirVersion": [
+    "4.0.1"
+  ],
+  "definition": {
+    "resource": [
+      {
+        "reference": {
+          "reference": "StructureDefinition/HopsMessage"
+        },
+        "name": "HopsMessage",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/HopsMessageHeader"
+        },
+        "name": "HopsMessageHeader",
+        "exampleBoolean": false
+      }
+    ],
+    "page": {
+      "nameUrl": "toc.html",
+      "title": "Table of Contents",
+      "generation": "html",
+      "page": [
+        {
+          "nameUrl": "index.html",
+          "title": "Home",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "CHANGELOG.html",
+          "title": "CHANGELOG",
+          "generation": "markdown"
+        }
+      ]
+    },
+    "parameter": [
+      {
+        "code": "copyrightyear",
+        "value": "2021+"
+      },
+      {
+        "code": "releaselabel",
+        "value": "ci-build"
+      },
+      {
+        "code": "show-inherited-invariants",
+        "value": "false"
+      },
+      {
+        "code": "excludettl",
+        "value": "true"
+      }
+    ]
+  }
+}

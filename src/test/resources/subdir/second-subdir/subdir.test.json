@@ -1,0 +1,50 @@
+{
+  "validator": {
+    "version": "4.0",
+    "ig": [
+      "../../fhir-profiles"
+    ]
+  },
+  "tests": [
+    {
+      "source": "../../fhir-instances/message-without-errors.json",
+      "profile": "http://fhir.nav.no/StructureDefinition/HopsMessage"
+    },
+    {
+      "source": "../../fhir-instances/message-with-unexpected-error.json",
+      "profile": "http://fhir.nav.no/StructureDefinition/HopsMessage"
+    },
+    {
+      "source": "../../fhir-instances/message-with-profile-and-expected-errors.json",
+      "tags": [
+        "with-profile"
+      ],
+      "expectedIssues": [
+        {
+          "severity": "ERROR",
+          "expression": "Bundle.entry[0].resource.ofType(MessageHeader).meta"
+        },
+        {
+          "severity": "ERROR",
+          "message": "Must be a valid HER-ID"
+        }
+      ]
+    },
+    {
+      "source": "../../fhir-instances/message-with-expected-errors.json",
+      "profile": "http://fhir.nav.no/StructureDefinition/HopsMessage",
+      "expectedIssues": [
+        {
+          "severity": "ERROR",
+          "expression": "Bundle.entry[0].resource.ofType(MessageHeader).destination[0].endpoint",
+          "message": "valid-her-id"
+        },
+        {
+          "severity": "ERROR",
+          "expression": "Bundle.entry[0].resource.ofType(MessageHeader).source.endpoint",
+          "message": "message that does not exist"
+        }
+      ]
+    }
+  ]
+}

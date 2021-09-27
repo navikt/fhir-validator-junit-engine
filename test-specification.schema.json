@@ -1,0 +1,194 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "FHIR Validator test specification",
+  "description": "Specification for tests which uses the FHIR Validator to validate FHIR resources against FHIR conformance resources.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": true,
+    "title": {
+      "description": "[Optional] Human readable name of the Test Suite, the default is to use the filename.",
+      "type": "string"
+    },
+    "validator": {
+      "type": "object",
+      "description": "[Optional] The arguments to use in the FHIR Validator, see: https://confluence.hl7.org/display/FHIR/Using+the+FHIR+Validator#UsingtheFHIRValidator-Runningthevalidator and https://raw.githubusercontent.com/hapifhir/org.hl7.fhir.core/master/org.hl7.fhir.validation/src/main/resources/help.txt",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "[Optional] The FHIR version to use, the default is to use 'current' which is R5.",
+          "default": "current",
+          "examples": [
+            "4.0",
+            "4.0.1"
+          ]
+        },
+        "tx": {
+          "type": "string",
+          "description": "[Optional] The (base) URL of a FHIR terminology service. The default is to not use a terminology service.",
+          "default": "n/a",
+          "examples": [
+            "http://tx.fhir.org"
+          ]
+        },
+        "txLog": {
+          "type": "string",
+          "description": "[Optional] Produce a log of the terminology server operations in file. Default value is not to produce a log.",
+          "examples": [
+            "txLog.txt",
+            "logs/tx.txt"
+          ]
+        },
+        "sct": {
+          "type": "string",
+          "description": "[Optional] Edition of SNOMED CT to use.",
+          "examples": [
+            "intl",
+            "us",
+            "uk",
+            "au",
+            "nl",
+            "ca",
+            "se",
+            "dk",
+            "es"
+          ]
+        },
+        "ig": {
+          "type": "array",
+          "description": "[Optional] IGs or profile definitions to load. Can be file, folder, URL or package ([id]#[ver]) of an implementation guide. The core profiles will always be loaded.",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "examples": [
+              "../fsh-generated/resources",
+              "hl7.fhir.us.core#1.0.1"
+            ]
+          }
+        }
+      }
+    },
+    "paths": {
+      "type": "array",
+      "description": "[Optional] Automatically generate tests for FHIR resources that are equivalent to tests were only the 'source' property is specified. Files are matched according to paths using the gitignore-glob-pattern, see: https://git-scm.com/docs/gitignore#_pattern_format",
+      "additionalProperties": false,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "examples": [
+          "fsh-generated/resources/**/*.json",
+          "!**/*.png"
+        ]
+      }
+    },
+    "tests": {
+      "type": "array",
+      "description": "List of test cases describing a FHIR resource to validate against a profile and the expected outcome.",
+      "additionalProperties": false,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source"
+        ],
+        "properties": {
+          "source": {
+            "description": "[Required] Relative path to the FHIR resource file (xml or json) to validate.",
+            "type": "string"
+          },
+          "title": {
+            "description": "[Optional] Human readable name of the Test Case, the default is the 'source' value.",
+            "type": "string"
+          },
+          "profile": {
+            "description": "[Optional] Canonical URL of the Profile the resources should conform to. If this is left empty the value of Resource.meta.profile will be used, if this also is empty the core profile is used.",
+            "type": "string",
+            "format": "uri"
+          },
+          "tags": {
+            "description": "[Optional] Tags can be used to mark and filter tests, must conform to the specified syntax rules: https://junit.org/junit5/docs/current/user-guide/#running-tests-tags",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[^,()&|! ]+$",
+              "examples": [
+                "sut"
+              ]
+            }
+          },
+          "expectedIssues": {
+            "type": "array",
+            "description": "[Optional] List of issues expected in the validation outcome. An issue with ERROR severity will result in a failed test unless specified here.",
+            "additionalProperties": false,
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "severity"
+              ],
+              "properties": {
+                "severity": {
+                  "description": "[Required] The expected severity of the issue, see: https://www.hl7.org/fhir/valueset-issue-severity.html",
+                  "enum": [
+                    "FATAL",
+                    "ERROR",
+                    "WARNING",
+                    "INFORMATION"
+                  ]
+                },
+                "type": {
+                  "description": "[Optional] The expected type of issue, see: https://www.hl7.org/fhir/valueset-issue-type.html",
+                  "enum": [
+                    "INVALID",
+                    "STRUCTURE",
+                    "REQUIRED",
+                    "VALUE",
+                    "INVARIANT",
+                    "SECURITY",
+                    "LOGIN",
+                    "UNKNOWN",
+                    "EXPIRED",
+                    "FORBIDDEN",
+                    "SUPPRESSED",
+                    "PROCESSING",
+                    "NOTSUPPORTED",
+                    "DUPLICATE",
+                    "MULTIPLEMATCHES",
+                    "NOTFOUND",
+                    "DELETED",
+                    "TOOLONG",
+                    "CODEINVALID",
+                    "EXTENSION",
+                    "TOOCOSTLY",
+                    "BUSINESSRULE",
+                    "CONFLICT",
+                    "TRANSIENT",
+                    "LOCKERROR",
+                    "NOSTORE",
+                    "EXCEPTION",
+                    "TIMEOUT",
+                    "INCOMPLETE",
+                    "THROTTLED",
+                    "INFORMATIONAL"
+                  ]
+                },
+                "expression": {
+                  "description": "[Optional] FHIRPath to the element within the FHIR resource expected to containing the error, see: https://www.hl7.org/fhir/operationoutcome.html#loc.",
+                  "type": "string"
+                },
+                "message": {
+                  "description": "[Optional] The expected validation error message. Match is partial and case insensitive.",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

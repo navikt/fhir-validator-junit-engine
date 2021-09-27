@@ -1,0 +1,347 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "HopsMessageHeader",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-category",
+      "valueString": "Foundation.Other"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-security-category",
+      "valueCode": "not-classified"
+    }
+  ],
+  "url": "http://fhir.nav.no/StructureDefinition/HopsMessageHeader",
+  "version": "0.1.0",
+  "name": "HopsMessageHeader",
+  "status": "active",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "v2",
+      "uri": "http://hl7.org/v2",
+      "name": "HL7 v2 Mapping"
+    },
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "MessageHeader",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/MessageHeader",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "MessageHeader.id",
+        "path": "MessageHeader.id",
+        "min": 1,
+        "constraint": [
+          {
+            "key": "valid-uuid",
+            "severity": "error",
+            "human": "Must be a valid uuid",
+            "expression": "$this.matches('^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')",
+            "source": "http://fhir.nav.no/StructureDefinition/HopsMessageHeader"
+          }
+        ]
+      },
+      {
+        "id": "MessageHeader.meta.id",
+        "path": "MessageHeader.meta.id",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.meta.source",
+        "path": "MessageHeader.meta.source",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.meta.profile",
+        "path": "MessageHeader.meta.profile",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.meta.security",
+        "path": "MessageHeader.meta.security",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.meta.tag",
+        "path": "MessageHeader.meta.tag",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.implicitRules",
+        "path": "MessageHeader.implicitRules",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.language",
+        "path": "MessageHeader.language",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.text.id",
+        "path": "MessageHeader.text.id",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.contained",
+        "path": "MessageHeader.contained",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.extension",
+        "path": "MessageHeader.extension",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.modifierExtension",
+        "path": "MessageHeader.modifierExtension",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.event[x]",
+        "path": "MessageHeader.event[x]",
+        "type": [
+          {
+            "code": "Coding"
+          }
+        ]
+      },
+      {
+        "id": "MessageHeader.event[x].id",
+        "path": "MessageHeader.event[x].id",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.event[x].extension",
+        "path": "MessageHeader.event[x].extension",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.event[x].system",
+        "path": "MessageHeader.event[x].system",
+        "min": 1
+      },
+      {
+        "id": "MessageHeader.event[x].version",
+        "path": "MessageHeader.event[x].version",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.event[x].code",
+        "path": "MessageHeader.event[x].code",
+        "min": 1
+      },
+      {
+        "id": "MessageHeader.event[x].display",
+        "path": "MessageHeader.event[x].display",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.event[x].userSelected",
+        "path": "MessageHeader.event[x].userSelected",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.destination.id",
+        "path": "MessageHeader.destination.id",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.destination.extension",
+        "path": "MessageHeader.destination.extension",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.destination.modifierExtension",
+        "path": "MessageHeader.destination.modifierExtension",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.destination.name",
+        "path": "MessageHeader.destination.name",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.destination.target",
+        "path": "MessageHeader.destination.target",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.destination.endpoint",
+        "path": "MessageHeader.destination.endpoint",
+        "example": [
+          {
+            "label": "Fully qualified HER-id",
+            "valueUrl": "urn:oid:2.16.578.1.12.4.1.2.131725"
+          }
+        ],
+        "constraint": [
+          {
+            "key": "valid-her-id",
+            "severity": "error",
+            "human": "Must be a valid HER-ID prefixed with OID namespace",
+            "expression": "$this.matches('^urn:oid:2\\\\.16\\\\.578\\\\.1\\\\.12\\\\.4\\\\.1\\\\.2\\\\.[1-9][0-9]{0,7}$')",
+            "source": "http://fhir.nav.no/StructureDefinition/HopsMessageHeader"
+          }
+        ]
+      },
+      {
+        "id": "MessageHeader.destination.receiver",
+        "path": "MessageHeader.destination.receiver",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.sender",
+        "path": "MessageHeader.sender",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.enterer",
+        "path": "MessageHeader.enterer",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.author",
+        "path": "MessageHeader.author",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.source.id",
+        "path": "MessageHeader.source.id",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.source.extension",
+        "path": "MessageHeader.source.extension",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.source.modifierExtension",
+        "path": "MessageHeader.source.modifierExtension",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.source.name",
+        "path": "MessageHeader.source.name",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.source.software",
+        "path": "MessageHeader.source.software",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.source.version",
+        "path": "MessageHeader.source.version",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.source.contact",
+        "path": "MessageHeader.source.contact",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.responsible",
+        "path": "MessageHeader.responsible",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.reason",
+        "path": "MessageHeader.reason",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.response.id",
+        "path": "MessageHeader.response.id",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.response.extension",
+        "path": "MessageHeader.response.extension",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.response.modifierExtension",
+        "path": "MessageHeader.response.modifierExtension",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.response.details.id",
+        "path": "MessageHeader.response.details.id",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.response.details.extension",
+        "path": "MessageHeader.response.details.extension",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.response.details.reference",
+        "path": "MessageHeader.response.details.reference",
+        "min": 1
+      },
+      {
+        "id": "MessageHeader.response.details.type",
+        "path": "MessageHeader.response.details.type",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.response.details.identifier",
+        "path": "MessageHeader.response.details.identifier",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.response.details.display",
+        "path": "MessageHeader.response.details.display",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.focus.id",
+        "path": "MessageHeader.focus.id",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.focus.extension",
+        "path": "MessageHeader.focus.extension",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.focus.reference",
+        "path": "MessageHeader.focus.reference",
+        "min": 1
+      },
+      {
+        "id": "MessageHeader.focus.type",
+        "path": "MessageHeader.focus.type",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.focus.identifier",
+        "path": "MessageHeader.focus.identifier",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.focus.display",
+        "path": "MessageHeader.focus.display",
+        "max": "0"
+      },
+      {
+        "id": "MessageHeader.definition",
+        "path": "MessageHeader.definition",
+        "max": "0"
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+---
+validator:
+  version: '4.0'
+tests:
+  - source: "fhir-instances/message-without-errors.json"
