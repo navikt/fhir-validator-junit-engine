@@ -39,7 +39,9 @@ jobs:
           cache: gradle
 
       - name: 🛠️ Build
-        run: gradle test shadowjar --no-daemon
+        run: |
+          gradle test shadowjar --no-daemon
+          mv build/libs/*.jar fhir-validator-junit-engine.jar
 
       - name: 🧹 Cleanup Gradle Cache
         # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
@@ -57,4 +59,4 @@ jobs:
           draft: ${{ steps.changelog_reader.outputs.status == 'unreleased' }}
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "build/libs/*.jar"
+          artifacts: "fhir-validator-junit-engine.jar"
