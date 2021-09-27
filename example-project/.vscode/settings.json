@@ -15,10 +15,10 @@
             "fileMatch": [
                 "**/*test.json",
             ],
-            "url": "https://raw.githubusercontent.com/emyklebost/fhir-tdp/main/test-specification.schema.json"
+            "url": "https://raw.githubusercontent.com/navikt/fhir-validator-junit-engine/main/test-specification.schema.json"
         }
     ],
     "yaml.schemas": {
-        "https://raw.githubusercontent.com/emyklebost/fhir-tdp/main/test-specification.schema.json": "**/*test.yaml"
+        "https://raw.githubusercontent.com/navikt/fhir-validator-junit-engine/main/test-specification.schema.json": "**/*test.yaml"
     }
 }
