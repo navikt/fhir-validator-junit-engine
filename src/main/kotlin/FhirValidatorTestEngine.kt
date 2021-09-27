@@ -12,8 +12,6 @@ import org.junit.platform.engine.support.hierarchical.ForkJoinPoolHierarchicalTe
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutorService
 import java.nio.file.Files
-import java.nio.file.Path
-import kotlin.io.path.Path
 import kotlin.io.path.name
 import kotlin.streams.asSequence
 
@@ -26,12 +24,11 @@ class FhirValidatorTestEngine : HierarchicalTestEngine<FhirValidatorExecutionCon
 
     override fun discover(discoveryRequest: EngineDiscoveryRequest, uniqueId: UniqueId): TestDescriptor {
         val specFiles = discoveryRequest.run {
-            val config = Config.create(configurationParameters)
-            val fileExt = listOf("json", "yml", "yaml").map { "${config.postfix}.$it" }
+            Color.disableAnsiColors = configurationParameters.disableAnsiColors()
+            val fileExt = listOf("json", "yml", "yaml").map { "${configurationParameters.testFilePostfix()}.$it" }
 
             val files = getSelectorsByType(DirectorySelector::class.java)
                 .map { it.path }
-                .plus(listOfNotNull(config.selectDirectory))
                 .flatMap { Files.walk(it).asSequence() }
                 .filter { fileExt.any { ext -> it.name.endsWith(ext, ignoreCase = true) } }
 
@@ -52,15 +49,5 @@ class FhirValidatorTestEngine : HierarchicalTestEngine<FhirValidatorExecutionCon
 }
 
 // See https://junit.org/junit5/docs/current/user-guide/#running-tests-config-params
-data class Config(val selectDirectory: Path?, val postfix: String) {
-    companion object {
-        fun create(params: ConfigurationParameters) =
-            params.run {
-                Color.disableAnsiColors = get("no.nav.disable-ansi-colors").orElseGet { "false" }.toBoolean()
-                Config(
-                    get("no.nav.select-directory").run { if (isPresent) Path(get()) else null },
-                    get("no.nav.postfix").orElseGet { "test" }
-                )
-            }
-    }
-}
+private fun ConfigurationParameters.disableAnsiColors() = get("no.nav.disable-ansi-colors").orElse("false").toBoolean()
+private fun ConfigurationParameters.testFilePostfix() = get("no.nav.postfix").orElse("test")
