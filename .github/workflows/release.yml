@@ -57,4 +57,4 @@ jobs:
           draft: ${{ steps.changelog_reader.outputs.status == 'unreleased' }}
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "build/libs/fhir-validator-junit-${{ steps.changelog_reader.outputs.version }}.jar"
+          artifacts: "build/libs/*.jar"
