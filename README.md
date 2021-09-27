@@ -15,5 +15,6 @@ Execute the following in a terminal:
 java -jar junit-platform-console-standalone-1.8.1.jar -cp fhir-validator-junit-engine-0.1.0.jar:validator_cli.jar -f test.yaml
 ```
 
-Se [example-project](example-project) for a working example.
+See [example-project](example-project) for a working example.
+
 ![vscode-screenshot](docs/vscode-terminal.png)
