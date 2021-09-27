@@ -7,3 +7,7 @@ gradle
 gradle-app.setting
 **/*.jar
 test-reports
+**/.classpath
+**/.project
+**/.settings
+

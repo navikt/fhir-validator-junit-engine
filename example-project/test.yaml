@@ -1,0 +1,11 @@
+---
+title: "My Test Suite"
+validator:
+  version: '4.0'
+tests:
+  - title: "Patient with communication without language shall return ERROR"
+    source: "test-resources/Patient-without-required-language.json"
+    expectedIssues:
+      - severity: ERROR
+        message: "minimum required = 1, but only found 0"
+        expression: "Patient.communication[0]"
