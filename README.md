@@ -12,7 +12,7 @@ The engine can be used with any JUnit5 test-runner that supports Directory and/o
 
 Execute the following in a terminal:
 ```
-java -jar junit-platform-console-standalone-1.8.1.jar -cp fhir-validator-junit-engine-0.1.0.jar:validator_cli.jar -f my-specification.test.yaml
+java -jar junit-platform-console-standalone-1.8.1.jar -cp fhir-validator-junit-engine-0.1.0.jar:validator_cli.jar -f test.yaml
 ```
 
 Se [example-project](example-project) for a working example.
