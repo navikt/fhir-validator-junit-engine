@@ -4,7 +4,7 @@ A [JUnit5 TestEngine](https://software-matters.net/posts/custom-test-engine/) to
 
 This allows for writing expected validation outcome as tests in json or yaml files.
 
-The engine can be used with any JUnit5 test-runner that supports File based [DiscoverySelectors](https://junit.org/junit5/docs/5.8.1/api/org.junit.platform.engine/org/junit/platform/engine/DiscoverySelector.html), e.g. the [JUnit Console Launcher](https://junit.org/junit5/docs/current/user-guide/#running-tests-console-launcher)
+The engine can be used with any JUnit5 test-runner that supports file based [DiscoverySelectors](https://junit.org/junit5/docs/5.8.1/api/org.junit.platform.engine/org/junit/platform/engine/DiscoverySelector.html), e.g. the [JUnit Console Launcher](https://junit.org/junit5/docs/current/user-guide/#running-tests-console-launcher)
 
 
 ## HOWTO
