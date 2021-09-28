@@ -60,10 +60,24 @@ class FhirValidatorTestEngineTest {
         EngineTestKit
             .engine(FhirValidatorTestEngine())
             .selectors(selectFile("src/test/resources/glob-pattern.test.yaml"))
+            .configurationParameter("no.nav.execution.parallel.enabled", "true")
+            .configurationParameter("no.nav.disable-ansi-colors", "true")
             .execute()
             .testEvents()
             .assertStatistics {
                 it.started(1).succeeded(1).failed(0).aborted(0).skipped(0)
+            }
+    }
+
+    @Test
+    fun `Given a test invalid validator config, test-suite should fail`() {
+        EngineTestKit
+            .engine(FhirValidatorTestEngine())
+            .selectors(selectFile("src/test/resources/invalid.test.yaml"))
+            .execute()
+            .testEvents()
+            .assertStatistics {
+                it.started(0)
             }
     }
 }

@@ -1,0 +1,5 @@
+---
+validator:
+  version: '44'
+tests:
+  - fileMatch: "fhir-instances/message-without-errors.json"
