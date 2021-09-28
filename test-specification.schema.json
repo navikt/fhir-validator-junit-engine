@@ -56,7 +56,10 @@
           ]
         },
         "ig": {
-          "type": "array",
+          "type": [
+            "array",
+            "string"
+          ],
           "description": "[Optional] IGs or profile definitions to load. Can be file, folder, URL or package ([id]#[ver]) of an implementation guide. The core profiles will always be loaded.",
           "uniqueItems": true,
           "items": {
@@ -109,7 +112,10 @@
           },
           "tags": {
             "description": "[Optional] Tags can be used to mark and filter tests, must conform to the specified syntax rules: https://junit.org/junit5/docs/current/user-guide/#running-tests-tags",
-            "type": "array",
+            "type": [
+              "array",
+              "string"
+            ],
             "uniqueItems": true,
             "items": {
               "type": "string",
