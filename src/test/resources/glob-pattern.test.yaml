@@ -1,8 +1,9 @@
 ---
 validator:
   version: '4.0'
-paths:
-  - ../resources/fhir-instances/**
-  - "!*/*errors.json"
-  - "!**/*error.json"
-  - "!fhir-instances/*instance.json"
+tests:
+  - fileMatch:
+    - ../resources/fhir-instances/**
+    - "!*/*errors.json"
+    - "!**/*error.json"
+    - "!fhir-instances/*instance.json"

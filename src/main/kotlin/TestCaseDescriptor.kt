@@ -10,13 +10,15 @@ import org.junit.platform.engine.support.descriptor.FileSource
 import org.junit.platform.engine.support.hierarchical.Node
 import org.opentest4j.AssertionFailedError
 import org.opentest4j.MultipleFailuresError
+import java.nio.file.Path
 import kotlin.io.path.nameWithoutExtension
 
 class TestCaseDescriptor(
     id: UniqueId,
     private val spec: Specification.TestCase,
+    private val resource: Path,
     source: FileSource,
-) : AbstractTestDescriptor(id, spec.title ?: spec.source.nameWithoutExtension, source),
+) : AbstractTestDescriptor(id, spec.title ?: resource.nameWithoutExtension, source),
     Node<FhirValidatorExecutionContext> {
     override fun getType() = TestDescriptor.Type.TEST
     override fun getTags() = spec.tags.map(TestTag::create).toSet()
@@ -26,12 +28,12 @@ class TestCaseDescriptor(
     ): FhirValidatorExecutionContext {
         print(createHeader())
 
-        val outcome = context.validator!!.validate(spec.source, spec.profile)
+        val outcome = context.validator!!.validate(resource, spec.profile)
         val failures = UnexpectedIssue.test(spec, outcome) + MissingIssue.test(spec, outcome)
         println(createSummary(outcome, failures))
 
         if (failures.any()) {
-            context.listener.reportingEntryPublished(this, createReportEntry(spec))
+            context.listener.reportingEntryPublished(this, createReportEntry())
             throw if (failures.count() == 1) failures.single() else MultipleFailuresError(null, failures)
         }
 
@@ -45,20 +47,20 @@ class TestCaseDescriptor(
             if (tags.any()) { appendLine(Color.TAGS.paint("  Tags: ${tags.joinToString { it.name }}")) }
             toString()
         }
+
+    private fun createReportEntry() =
+        spec.run {
+            val values = mapOf(
+                Pair("resource", "${resource.toUri()}"),
+                Pair("profile", profile ?: "core"),
+                Pair("expectedIssueCount", "${expectedIssues.count()}")
+            )
+
+            ReportEntry.from(values)
+        }
 }
 
 private fun FileSource.toUrl() = "${file.toPath().toUri()}:${position.get().line}:${position.get().column.get()}"
-
-private fun createReportEntry(spec: Specification.TestCase) =
-    spec.run {
-        val values = mapOf(
-            Pair("source", "${source.toUri()}"),
-            Pair("profile", profile ?: "core"),
-            Pair("expectedIssueCount", "${expectedIssues.count()}")
-        )
-
-        ReportEntry.from(values)
-    }
 
 private fun createSummary(outcome: OperationOutcome, failedAssertions: List<AssertionFailedError>) =
     StringBuilder().run {

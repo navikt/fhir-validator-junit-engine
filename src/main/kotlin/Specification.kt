@@ -1,15 +1,12 @@
 package no.nav
 
-import java.nio.file.Path
-
 data class Specification(
     val title: String?,
     val validator: Validator = Validator(),
     val tests: List<TestCase> = emptyList(),
-    val paths: List<String> = emptyList(),
 ) {
     data class TestCase(
-        val source: Path,
+        val fileMatch: List<String> = emptyList(),
         val title: String? = null,
         val profile: String? = null,
         val expectedIssues: List<Issue> = emptyList(),

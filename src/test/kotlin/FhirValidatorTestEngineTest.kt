@@ -1,6 +1,5 @@
 import no.nav.FhirValidatorTestEngine
 import org.junit.jupiter.api.Test
-import org.junit.platform.engine.discovery.DiscoverySelectors.selectDirectory
 import org.junit.platform.engine.discovery.DiscoverySelectors.selectFile
 import org.junit.platform.launcher.TagFilter
 import org.junit.platform.testkit.engine.EngineTestKit

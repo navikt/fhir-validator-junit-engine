@@ -1,10 +1,11 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/navikt/fhir-validator-junit-engine/main/test-specification.schema.json
 ---
 title: "My Test Suite"
 validator:
   version: '4.0'
 tests:
   - title: "Patient with communication without language shall return ERROR"
-    source: "test-resources/Patient-without-required-language.json"
+    fileMatch: "test-resources/Patient-without-required-language.json"
     expectedIssues:
       - severity: ERROR
         message: "minimum required = 1, but only found 0"

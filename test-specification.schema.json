@@ -69,19 +69,6 @@
         }
       }
     },
-    "paths": {
-      "type": "array",
-      "description": "[Optional] Automatically generate tests for FHIR resources that are equivalent to tests were only the 'source' property is specified. Files are matched according to paths using the gitignore-glob-pattern, see: https://git-scm.com/docs/gitignore#_pattern_format",
-      "additionalProperties": false,
-      "uniqueItems": true,
-      "items": {
-        "type": "string",
-        "examples": [
-          "fsh-generated/resources/**/*.json",
-          "!**/*.png"
-        ]
-      }
-    },
     "tests": {
       "type": "array",
       "description": "List of test cases describing a FHIR resource to validate against a profile and the expected outcome.",
@@ -91,12 +78,22 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "source"
+          "fileMatch"
         ],
         "properties": {
-          "source": {
-            "description": "[Required] Relative path to the FHIR resource file (xml or json) to validate.",
-            "type": "string"
+          "fileMatch": {
+            "type": "array",
+            "description": "[Required] gitignore-glob-patterns for FHIR resources (xml or json) to validate, see: https://git-scm.com/docs/gitignore#_pattern_format",
+            "additionalProperties": false,
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "examples": [
+                "fsh-generated/resources/**/*.json",
+                "!**/*.png"
+              ]
+            }
           },
           "title": {
             "description": "[Optional] Human readable name of the Test Case, the default is the 'source' value.",

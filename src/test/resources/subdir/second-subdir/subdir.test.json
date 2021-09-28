@@ -7,15 +7,15 @@
   },
   "tests": [
     {
-      "source": "../../fhir-instances/message-without-errors.json",
+      "fileMatch": ["../../fhir-instances/message-without-errors.json"],
       "profile": "http://fhir.nav.no/StructureDefinition/HopsMessage"
     },
     {
-      "source": "../../fhir-instances/message-with-unexpected-error.json",
+      "fileMatch": ["../../fhir-instances/message-with-unexpected-error.json"],
       "profile": "http://fhir.nav.no/StructureDefinition/HopsMessage"
     },
     {
-      "source": "../../fhir-instances/message-with-profile-and-expected-errors.json",
+      "fileMatch": "../../fhir-instances/message-with-profile-and-expected-errors.json",
       "tags": [
         "with-profile"
       ],
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "source": "../../fhir-instances/message-with-expected-errors.json",
+      "fileMatch": ["../../fhir-instances/message-with-expected-errors.json"],
       "profile": "http://fhir.nav.no/StructureDefinition/HopsMessage",
       "expectedIssues": [
         {

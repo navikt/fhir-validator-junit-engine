@@ -1,6 +1,5 @@
 package no.nav
 
-import com.github.shyiko.klob.Glob
 import org.junit.platform.engine.ConfigurationParameters
 import org.junit.platform.engine.EngineDiscoveryRequest
 import org.junit.platform.engine.ExecutionRequest
@@ -24,13 +23,7 @@ class FhirValidatorTestEngine : HierarchicalTestEngine<FhirValidatorExecutionCon
         Color.disableAnsiColors = discoveryRequest.configurationParameters.disableAnsiColors()
 
         val patterns = discoveryRequest.getSelectorsByType(FileSelector::class.java).map { it.rawPath }
-
-        // Resolves .gitignore-pattern based paths to absolute paths.
-        val specFiles = Glob
-            .from(*patterns.toTypedArray())
-            .iterate(Paths.get("").toAbsolutePath()) // Current working directory
-            .asSequence()
-            .toList()
+        val specFiles = Paths.get("").globFileWalk(patterns).toList()
 
         return EngineDescriptorFactory.create(uniqueId, specFiles)
     }
