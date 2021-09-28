@@ -17,10 +17,11 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.io.path.Path
 
 class FhirValidator(private val validationEngine: ValidationEngine) {
-    fun validate(source: Path, profile: String?): OperationOutcome {
-        val outcome = validationEngine.validate(source.toString(), listOf(profile).mapNotNull { it })
-        return withPositionFileSources(outcome)
-    }
+    fun validate(source: Path, profile: String?) =
+        validationEngine
+            .validate(source.toString(), listOf(profile).mapNotNull { it })
+            .apply { issue.removeIf { it.details?.text == "All OK" } }
+            .withPositionFileSources()
 
     companion object {
         private val service = ValidationService()
@@ -51,10 +52,11 @@ class FhirValidator(private val validationEngine: ValidationEngine) {
     }
 }
 
-private fun withPositionFileSources(outcome: OperationOutcome): OperationOutcome {
-    val file = outcome.getExtensionByUrl(ToolingExtensions.EXT_OO_FILE)?.valueStringType?.value
+// Rewrites the issue-source extension values to format: file:///{filePath}:{line}:{column}
+private fun OperationOutcome.withPositionFileSources(): OperationOutcome {
+    val file = getExtensionByUrl(ToolingExtensions.EXT_OO_FILE)?.valueStringType?.value
     if (file != null) {
-        outcome.issue.forEach {
+        issue.forEach {
             val line = it.getExtensionByUrl(ToolingExtensions.EXT_ISSUE_LINE)?.valueIntegerType?.value
             val column = it.getExtensionByUrl(ToolingExtensions.EXT_ISSUE_COL)?.valueIntegerType?.value
 
@@ -64,30 +66,26 @@ private fun withPositionFileSources(outcome: OperationOutcome): OperationOutcome
                 column?.let { fileUrl += ":$column" }
             }
 
-            listOf(
-                ToolingExtensions.EXT_ISSUE_LINE,
-                ToolingExtensions.EXT_ISSUE_COL,
-                ToolingExtensions.EXT_ISSUE_SOURCE
-            ).forEach { extUrl -> it.removeExtension(extUrl) }
-
+            it.removeExtension(ToolingExtensions.EXT_ISSUE_SOURCE)
             it.addExtension(ToolingExtensions.EXT_ISSUE_SOURCE, StringType(fileUrl))
         }
     }
 
-    return outcome
+    return this
 }
 
 private fun Specification.Validator.toCLIContext(): CliContext {
     val args = mutableListOf<String>()
 
-    args.add(Params.STRICT_EXTENSIONS)
-    args.addAll(listOf(Params.QUESTIONNAIRE, QuestionnaireMode.REQUIRED.name))
-    args.addAll(listOf(Params.TERMINOLOGY, tx ?: "n/a"))
+    fun addArg(key: String, value: String?) = value?.let { args.addAll(listOf(key, value)) }
 
-    ig.forEach { args.addAll(listOf(Params.IMPLEMENTATION_GUIDE, it)) }
-    version?.let { args.addAll(listOf(Params.VERSION, it)) }
-    sct?.let { args.addAll(listOf(Params.SCT, it)) }
-    txLog?.let { args.addAll(listOf(Params.TERMINOLOGY_LOG, it)) }
+    ig.forEach { addArg(Params.IMPLEMENTATION_GUIDE, it) }
+    args.add(Params.STRICT_EXTENSIONS)
+    addArg(Params.VERSION, version)
+    addArg(Params.TERMINOLOGY, tx ?: "n/a")
+    addArg(Params.TERMINOLOGY_LOG, txLog)
+    addArg(Params.SCT, sct)
+    addArg(Params.QUESTIONNAIRE, QuestionnaireMode.REQUIRED.name)
 
     return Params.loadCliContext(args.toTypedArray())
 }
