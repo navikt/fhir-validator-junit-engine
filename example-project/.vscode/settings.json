@@ -9,16 +9,6 @@
                 "test-resources/*.json",
             ],
             "url": "https://www.hl7.org/fhir/fhir.schema.json"
-        },
-        {
-            // The schema provides IntelliSense when editing test specification files
-            "fileMatch": [
-                "**/*test.json",
-            ],
-            "url": "https://raw.githubusercontent.com/navikt/fhir-validator-junit-engine/main/test-specification.schema.json"
         }
-    ],
-    "yaml.schemas": {
-        "https://raw.githubusercontent.com/navikt/fhir-validator-junit-engine/main/test-specification.schema.json": "**/*test.yaml"
-    }
+    ]
 }

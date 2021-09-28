@@ -82,13 +82,16 @@
         ],
         "properties": {
           "fileMatch": {
-            "type": "array",
+            "type": [
+              "array",
+              "string"
+            ],
             "description": "[Required] gitignore-glob-patterns for FHIR resources (xml or json) to validate, see: https://git-scm.com/docs/gitignore#_pattern_format",
             "additionalProperties": false,
             "uniqueItems": true,
-            "minItems": 1,
             "items": {
               "type": "string",
+              "minItems": 1,
               "examples": [
                 "fsh-generated/resources/**/*.json",
                 "!**/*.png"
@@ -96,7 +99,7 @@
             }
           },
           "title": {
-            "description": "[Optional] Human readable name of the Test Case, the default is the 'source' value.",
+            "description": "[Optional] Human readable name of the Test Case, the default is the validated resource's filename.",
             "type": "string"
           },
           "profile": {
