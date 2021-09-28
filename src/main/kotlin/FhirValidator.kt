@@ -27,8 +27,8 @@ class FhirValidator(private val validationEngine: ValidationEngine) {
         private val service = ValidationService()
         private val cache = ConcurrentHashMap<Specification.Validator, FhirValidator>()
 
-        fun create(spec: Specification.Validator): FhirValidator {
-            return cache.getOrPut(spec) {
+        fun create(spec: Specification.Validator): FhirValidator =
+            cache.getOrPut(spec) {
                 val ctx = spec.toCLIContext()
                 if (ctx.sv == null) ctx.sv = service.determineVersion(ctx)
 
@@ -48,7 +48,6 @@ class FhirValidator(private val validationEngine: ValidationEngine) {
 
                 FhirValidator(engine)
             }
-        }
     }
 }
 

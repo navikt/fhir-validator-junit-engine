@@ -12,9 +12,6 @@ import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutorService
 import java.nio.file.Paths
 
-private const val PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME = "no.nav.execution.parallel.enabled"
-private const val PARALLEL_CONFIG_PREFIX = "no.nav.execution.parallel.config."
-
 class FhirValidatorTestEngine : HierarchicalTestEngine<FhirValidatorExecutionContext>() {
     // See https://junit.org/junit5/docs/current/user-guide/#launcher-api-engines-custom
     override fun getId() = "fhir-validator-junit-engine"
@@ -32,11 +29,12 @@ class FhirValidatorTestEngine : HierarchicalTestEngine<FhirValidatorExecutionCon
         FhirValidatorExecutionContext(request.engineExecutionListener)
 
     override fun createExecutorService(request: ExecutionRequest): HierarchicalTestExecutorService =
-        if (request.configurationParameters.getBoolean(PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME).orElse(false)) {
-            val config = PrefixedConfigurationParameters(request.configurationParameters, PARALLEL_CONFIG_PREFIX)
+        if (request.configurationParameters.parallelEnabled()) {
+            val config = PrefixedConfigurationParameters(request.configurationParameters, "no.nav.execution.parallel.config.")
             ForkJoinPoolHierarchicalTestExecutorService(config)
         } else super.createExecutorService(request)
 }
 
 // See https://junit.org/junit5/docs/current/user-guide/#running-tests-config-params
-private fun ConfigurationParameters.disableAnsiColors() = get("no.nav.disable-ansi-colors").orElse("false").toBoolean()
+private fun ConfigurationParameters.parallelEnabled() = getBoolean("no.nav.execution.parallel.enabled").orElse(false)
+private fun ConfigurationParameters.disableAnsiColors() = getBoolean("no.nav.disable-ansi-colors").orElse(false)
