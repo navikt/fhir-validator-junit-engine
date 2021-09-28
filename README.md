@@ -97,6 +97,7 @@ jobs:
           
       - name: ✔️ Run tests
         run: java -jar junit-platform-console-standalone-1.8.1.jar -cp fhir-validator-junit-engine.jar:validator_cli.jar -f /tests/*.yaml --reports-dir /test-results
+        continue-on-error: true
 
       - name: 📤 Publish test results
         uses: EnricoMi/publish-unit-test-result-action@v1
