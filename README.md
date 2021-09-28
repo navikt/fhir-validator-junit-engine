@@ -35,7 +35,7 @@ validator:
   txLog: logs/tx.txt
   sct: us
 tests:
-  # This test will validate 1 resource against a profile and expects 1 error and 1 warning.
+  # 1. Test will validate 1 resource against a profile and expects 1 error and 1 warning.
   - title: Messages with missing destination.endpoint shall give ERROR.
     profile: http://example.com/fhir/StructureDefinition/MyMessage
     fileMatch: test-resources/message-with-missing-destination.json
@@ -49,7 +49,7 @@ tests:
         expression: Bundle.entry[0].resource.ofType(MessageHeader).destination[0].endpoint
         message: minimum required = 1, but only found 0
   
-  # Because this test has multiple file-matches it will generate multiple tests, non of which expects any errors.
+  # 2. Test has multiple file-matches and will generate multiple tests, non of which expects any errors.
   - fileMatch:
       - ../fsh-generated/resources/**
       - "!../fsh-generated/resources/ImplementationGuide-*"
