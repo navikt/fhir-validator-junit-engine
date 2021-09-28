@@ -9,7 +9,7 @@
         "command": "java",
         "args": [
           "-jar", "junit-platform-console-standalone-1.8.1.jar",
-          "-cp", "fhir-validator-junit-engine-0.1.0.jar:validator_cli.jar",
+          "-cp", "fhir-validator-junit-engine.jar:validator_cli.jar",
           "-f", "test.yaml",
           "--reports-dir", "test-reports"
       ],
