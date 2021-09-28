@@ -42,11 +42,11 @@ tests:
       - fast
       - message
     expectedIssues:
-        - severity: WARNING
-        - severity: ERROR
-          type: INVARIANT
-          expression: Bundle.entry[0].resource.ofType(MessageHeader).destination[0].endpoint
-          message: minimum required = 1, but only found 0
+      - severity: WARNING
+      - severity: ERROR
+        type: INVARIANT
+        expression: Bundle.entry[0].resource.ofType(MessageHeader).destination[0].endpoint
+        message: minimum required = 1, but only found 0
   - fileMatch:
       - ../fsh-generated/resources/**
       - "!../fsh-generated/resources/ImplementationGuide-*"
