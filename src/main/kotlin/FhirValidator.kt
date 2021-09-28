@@ -52,7 +52,7 @@ class FhirValidator(private val validationEngine: ValidationEngine) {
     }
 }
 
-// Rewrites the issue-source extension values to format: file:///{filePath}:{line}:{column}
+/** Rewrites the issue-source extension values to format: file:///{filePath}:{line}:{column} */
 private fun OperationOutcome.withPositionFileSources(): OperationOutcome {
     val file = getExtensionByUrl(ToolingExtensions.EXT_OO_FILE)?.valueStringType?.value
     if (file != null) {
@@ -61,9 +61,10 @@ private fun OperationOutcome.withPositionFileSources(): OperationOutcome {
             val column = it.getExtensionByUrl(ToolingExtensions.EXT_ISSUE_COL)?.valueIntegerType?.value
 
             var fileUrl = Path(file).toUri().toString()
-            line?.let {
+
+            if (line != null) {
                 fileUrl += ":$line"
-                column?.let { fileUrl += ":$column" }
+                if (column != null) fileUrl += ":$column"
             }
 
             it.removeExtension(ToolingExtensions.EXT_ISSUE_SOURCE)

@@ -10,7 +10,7 @@ class FhirValidatorTestEngineTest {
     fun `Given a directory with a json test file, tests should be discovered and executed`() {
         EngineTestKit
             .engine(FhirValidatorTestEngine())
-            .selectors(selectDirectory("src/test/resources/subdir"))
+            .selectors(selectFile("src/test/resources/subdir/**/*.json"))
             .filters(TagFilter.excludeTags("with-profile"))
             .execute()
             .testEvents()
@@ -23,7 +23,7 @@ class FhirValidatorTestEngineTest {
     fun `Filtered by tag, test should validate using meta-profile`() {
         EngineTestKit
             .engine(FhirValidatorTestEngine())
-            .selectors(selectDirectory("src/test/resources/subdir/second-subdir"))
+            .selectors(selectFile("src/test/resources/subdir/second-subdir/**"))
             .filters(TagFilter.includeTags("with-profile"))
             .execute()
             .testEvents()

@@ -1,19 +1,17 @@
 package no.nav
 
+import com.github.shyiko.klob.Glob
 import org.junit.platform.engine.ConfigurationParameters
 import org.junit.platform.engine.EngineDiscoveryRequest
 import org.junit.platform.engine.ExecutionRequest
 import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.UniqueId
-import org.junit.platform.engine.discovery.DirectorySelector
 import org.junit.platform.engine.discovery.FileSelector
 import org.junit.platform.engine.support.config.PrefixedConfigurationParameters
 import org.junit.platform.engine.support.hierarchical.ForkJoinPoolHierarchicalTestExecutorService
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutorService
-import java.nio.file.Files
-import kotlin.io.path.name
-import kotlin.streams.asSequence
+import java.nio.file.Paths
 
 private const val PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME = "no.nav.execution.parallel.enabled"
 private const val PARALLEL_CONFIG_PREFIX = "no.nav.execution.parallel.config."
@@ -23,17 +21,16 @@ class FhirValidatorTestEngine : HierarchicalTestEngine<FhirValidatorExecutionCon
     override fun getId() = "fhir-validator-junit-engine"
 
     override fun discover(discoveryRequest: EngineDiscoveryRequest, uniqueId: UniqueId): TestDescriptor {
-        val specFiles = discoveryRequest.run {
-            Color.disableAnsiColors = configurationParameters.disableAnsiColors()
-            val fileExt = listOf("json", "yml", "yaml").map { "${configurationParameters.testFilePostfix()}.$it" }
+        Color.disableAnsiColors = discoveryRequest.configurationParameters.disableAnsiColors()
 
-            val files = getSelectorsByType(DirectorySelector::class.java)
-                .map { it.path }
-                .flatMap { Files.walk(it).asSequence() }
-                .filter { fileExt.any { ext -> it.name.endsWith(ext, ignoreCase = true) } }
+        val patterns = discoveryRequest.getSelectorsByType(FileSelector::class.java).map { it.rawPath }
 
-            files + getSelectorsByType(FileSelector::class.java).map { it.path }
-        }
+        // Resolves .gitignore-pattern based paths to absolute paths.
+        val specFiles = Glob
+            .from(*patterns.toTypedArray())
+            .iterate(Paths.get("").toAbsolutePath()) // Current working directory
+            .asSequence()
+            .toList()
 
         return EngineDescriptorFactory.create(uniqueId, specFiles)
     }
@@ -50,4 +47,3 @@ class FhirValidatorTestEngine : HierarchicalTestEngine<FhirValidatorExecutionCon
 
 // See https://junit.org/junit5/docs/current/user-guide/#running-tests-config-params
 private fun ConfigurationParameters.disableAnsiColors() = get("no.nav.disable-ansi-colors").orElse("false").toBoolean()
-private fun ConfigurationParameters.testFilePostfix() = get("no.nav.postfix").orElse("test")

@@ -70,7 +70,7 @@ private fun loadConfig(specPath: Path): Specification {
 
     val config = configLoader.loadConfigOrThrow<Specification>(specPath)
 
-    // Resolves .gitgnore-pattern based paths to absolute paths.
+    // Resolves .gitignore-pattern based paths to absolute paths.
     val resolvedPaths = Glob
         .from(*config.paths.toTypedArray())
         .iterate(specPath.toAbsolutePath().parent)
