@@ -66,6 +66,8 @@ Tests can be [filtered by tags](https://junit.org/junit5/docs/current/user-guide
 
 Tests can be executed in parallel by adding the argument `--config no.nav.execution.parallel.enabled=true`.
 
+Text coloring in logs can be disabled with `--config no.nav.disable-ansi-colors=true`.
+
 ## 🚀 CI\CD
 The junit-runner can be configured to output test-reports in JUnit XML format, this can be used in existing tools that already support this format.
 
