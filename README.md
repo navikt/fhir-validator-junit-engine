@@ -60,13 +60,12 @@ tests:
 ```
 
 ## 🖥️ JUnit Console Launcher
-Currently the best way to run custom JUnit engines is to use the official [console launcher](https://junit.org/junit5/docs/current/user-guide/#running-tests-console-launcher). Test files are selected using one or multiple `-f, --select-file` arguments, the values adhere to the [.gitignore variant of the glob pattern](https://git-scm.com/docs/gitignore#_pattern_format).
+Currently the best way to run custom JUnit engines is to use the official [console launcher](https://junit.org/junit5/docs/current/user-guide/#running-tests-console-launcher). 
 
-Tests can be [filtered by tags](https://junit.org/junit5/docs/current/user-guide/#running-tests-tags), e.g. `--include-tag fast` or `--exclude-tag ig`.
-
-Tests can be executed in parallel by adding the argument `--config no.nav.execution.parallel.enabled=true`.
-
-Text coloring in logs can be disabled with `--config no.nav.disable-ansi-colors=true`.
+- Test files are selected using one or multiple `-f, --select-file` arguments, the values adhere to the [.gitignore variant of the glob pattern](https://git-scm.com/docs/gitignore#_pattern_format).
+- Tests can be [filtered by tags](https://junit.org/junit5/docs/current/user-guide/#running-tests-tags), e.g. `--include-tag fast` or `--exclude-tag ig`.
+- Tests can be executed in parallel by adding the argument `--config no.nav.execution.parallel.enabled=true`.
+- Text coloring in logs can be disabled with `--config no.nav.disable-ansi-colors=true`.
 
 ## 🚀 CI\CD
 The junit-runner can be configured to output test-reports in JUnit XML format, this can be used in existing tools that already support this format.
