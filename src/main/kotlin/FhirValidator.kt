@@ -1,9 +1,7 @@
 package no.nav
 
-import org.hl7.fhir.r5.model.ImplementationGuide
 import org.hl7.fhir.r5.model.OperationOutcome
 import org.hl7.fhir.r5.model.StringType
-import org.hl7.fhir.r5.model.StructureDefinition
 import org.hl7.fhir.r5.utils.ToolingExtensions
 import org.hl7.fhir.utilities.TimeTracker
 import org.hl7.fhir.utilities.VersionUtilities
@@ -34,17 +32,7 @@ class FhirValidator(private val validationEngine: ValidationEngine) {
 
                 val packageName = VersionUtilities.packageForVersion(ctx.sv)
                 val version = VersionUtilities.getCurrentVersion(ctx.sv)
-
                 val engine = service.initializeValidator(ctx, "$packageName#$version", TimeTracker())
-
-                ctx.profiles.forEach {
-                    if (!engine.context.hasResource(StructureDefinition::class.java, it) &&
-                        !engine.context.hasResource(ImplementationGuide::class.java, it)
-                    ) {
-                        println("  Fetch Profile from $it")
-                        engine.loadProfile(ctx.locations.getOrDefault(it, it))
-                    }
-                }
 
                 FhirValidator(engine)
             }

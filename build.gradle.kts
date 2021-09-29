@@ -5,6 +5,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.0.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
     `java-library`
+    jacoco
 }
 
 group = "no.nav"
@@ -40,6 +41,10 @@ tasks {
                 )
             )
         }
+    }
+
+    jacocoTestReport {
+        dependsOn(test)
     }
 }
 
