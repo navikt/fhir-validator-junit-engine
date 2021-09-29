@@ -22,7 +22,9 @@ See [example-project](example-project) for a working example.
 ![demo](docs/demo.gif)
 
 ## 👨‍💻 Writing tests
-Tests are written using specification files in either YAML or JSON, following is an example in YAML, most fields are optional but included here for completeness.
+Tests are written using specification files in either YAML or JSON. There is a [json-schema](test-specification.schema.json) that can be used to get intellisense and documentation when writing tests in a supported text-editor. Visual Studio Code supports this for json files, but requires an [extension for yaml support](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
+
+Following is an example in YAML, most fields are optional but included here for completeness.
 
 ```yaml
 title: Human readable name of the Test Suite.
@@ -56,8 +58,6 @@ tests:
     tags: ig
 
 ```
-
-There is a [json-schema](test-specification.schema.json) that can be used to gain intellisense and documentation when writing tests in a supported text-editor, vscode supports this for json files, but requires an [extension for yaml support](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
 
 ## 🖥️ JUnit Console Launcher
 Currently the best way to run custom JUnit engines is to use the official [console launcher](https://junit.org/junit5/docs/current/user-guide/#running-tests-console-launcher). Test files are selected using one or multiple `-f, --select-file` arguments, the values adhere to the [.gitignore variant of the glob pattern](https://git-scm.com/docs/gitignore#_pattern_format).
