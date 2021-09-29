@@ -22,7 +22,7 @@ See [example-project](example-project) for a working example.
 ![demo](docs/demo.gif)
 
 ## 👨‍💻 Writing tests
-Tests are written using specification files in either YAML or JSON. There is a [json-schema](test-specification.schema.json) that can be used to get intellisense and documentation when writing tests in a supported text-editor. Visual Studio Code supports this for json files, but requires an [extension for yaml support](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
+Tests are written using specification files in either YAML or JSON. There is a [json-schema](test-specification.schema.json) that can be used to get intellisense and documentation when writing tests in a supported text-editor. Visual Studio Code supports this for json files, but requires an [extension for yaml support](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml).
 
 Following is an example in YAML, most fields are optional but included here for completeness.
 
