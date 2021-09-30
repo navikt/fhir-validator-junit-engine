@@ -2,12 +2,12 @@
 .gradle
 bin
 build
+out
 gradlew*
 gradle
 gradle-app.setting
-**/*.jar
 test-reports
+**/*.jar
 **/.classpath
 **/.project
 **/.settings
-
