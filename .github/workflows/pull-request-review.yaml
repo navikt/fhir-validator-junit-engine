@@ -43,7 +43,7 @@ jobs:
             -reporter=github-check
             -filter-mode=nofilter
           )
-          cat ktlint-results/ktlint-report-in-checkstyle-format.xml | reviewdog "${args[@]}"
+          cat ktlint-report-in-checkstyle-format.xml | reviewdog "${args[@]}"
 
   review-unit-tests:
     name: Review tests (dependabot)
