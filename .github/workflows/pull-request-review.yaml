@@ -12,26 +12,6 @@ on:
       - 'dependabot/**'
 
 jobs:
-  review-unit-tests:
-    name: Review tests (dependabot)
-    runs-on: ubuntu-latest
-
-    # Restrict to verified dependabot user when auto update is enabled
-    if: github.event.workflow_run.conclusion != 'skipped' && github.actor == 'dependabot[bot]'
-
-    steps:
-      - name: Fetch artifact (unit test)
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          workflow: "Pull request"
-          run_id: ${{ github.event.workflow_run.id }}
-
-      - name: Publish results (unit test)
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        with:
-          commit: ${{ github.event.workflow_run.head_sha }}
-          files: "**/build/test-results/test/TEST-*.xml"
-
   review-ktlint:
     name: Review linting (dependabot)
     runs-on: ubuntu-latest
@@ -44,6 +24,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: "Pull request"
+          name: ktlint-results
           run_id: ${{ github.event.workflow_run.id }}
 
       - uses: reviewdog/action-setup@v1
@@ -59,7 +40,28 @@ jobs:
             -f=checkstyle
             -diff="git diff"
             -name=ktlint
-            -reporter=github-check   # github-pr-review is unsupported in workflow_run
-            -filter-mode=nofilter       # Fully supported by github-pr-check
+            -reporter=github-check
+            -filter-mode=nofilter
           )
           cat ktlint-results/ktlint-report-in-checkstyle-format.xml | reviewdog "${args[@]}"
+
+  review-unit-tests:
+    name: Review tests (dependabot)
+    runs-on: ubuntu-latest
+
+    # Restrict to verified dependabot user when auto update is enabled
+    if: github.event.workflow_run.conclusion != 'skipped' && github.actor == 'dependabot[bot]'
+
+    steps:
+      - name: Fetch artifact (unit test)
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: "Pull request"
+          name: unit-test-results
+          run_id: ${{ github.event.workflow_run.id }}
+
+      - name: Publish results (unit test)
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        with:
+          commit: ${{ github.event.workflow_run.head_sha }}
+          files: "**/build/test-results/test/TEST-*.xml"
