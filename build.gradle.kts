@@ -57,6 +57,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     testImplementation("org.junit.platform:junit-platform-testkit:1.8.1")
     testRuntimeOnly("ca.uhn.hapi.fhir:org.hl7.fhir.validation:5.5.3")
-    testRuntimeOnly("com.squareup.okhttp3:okhttp:4.9.1")
+    testRuntimeOnly("com.squareup.okhttp3:okhttp:4.9.2")
     testRuntimeOnly("org.slf4j:slf4j-nop:1.7.32")
 }
