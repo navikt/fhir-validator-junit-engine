@@ -1,26 +1,63 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "label": "Run FHIR Validator JUnit tests",
-        "type": "shell",
-        "command": "java",
-        "args": [
-          "-jar", "junit-platform-console-standalone-1.8.1.jar",
-          "-cp", "fhir-validator-junit-engine.jar:validator_cli.jar",
-          "-f", "test.yaml",
-          "--reports-dir", "test-reports"
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run FHIR Validator JUnit tests",
+      "type": "shell",
+      "command": "java",
+      "args": [
+        "-jar", "junit-platform-console-standalone-1.8.1.jar",
+        "-cp", "fhir-validator-junit-engine.jar:validator_cli.jar",
+        "-f", "test.yaml",
+        "--reports-dir", "test-reports"
       ],
-        "group":{
-            "kind": "test",
-            "isDefault": true
-        },
-        "presentation": {
-          "clear": true
-        },
-        "problemMatcher": []
-      }
-    ]
-  }
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run FHIR Validator",
+      "type": "shell",
+      "command": "java",
+      "args": [
+        "-jar", "validator_cli.jar",
+        "${workspaceFolder}/test-resources",
+        "-version", "4.0",
+        "-tx", "n/a"
+      ],
+      "presentation": {
+        "clear": true
+      },
+      "problemMatcher": [
+        {
+          "source": "FHIR Validator",
+          "fileLocation": "absolute",
+          "pattern": [
+            {
+              "regexp": "^-- (.+) -{5,}$",
+              "file": 1,
+            },
+            {
+              "regexp": "^.*$",
+            },
+            {
+              "regexp": "^  (.+) @ .+ \\(line ?(\\d+), col ?(\\d+)\\) : (.+)$",
+              "severity": 1,
+              "line": 2,
+              "column": 3,
+              "message": 4,
+              "loop": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

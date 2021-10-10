@@ -7,3 +7,4 @@ tests:
     expectedIssues:
       - severity: ERROR
         message: "minimum required = 1, but only found 0"
+  - fileMatch: "**/Organization-valid.json"
