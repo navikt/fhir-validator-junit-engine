@@ -6,8 +6,7 @@
     "test": "java -jar libs/junit-platform-console-standalone-1.8.1.jar -cp libs/fhir-validator-junit-engine.jar:libs/validator_cli.jar -e fhir-validator-junit-engine -f **test.yaml",
     "validate": "java -jar libs/validator_cli.jar test-resources -version 4.0 -tx n/a"
   },
-  "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "download": "^8.0.0",
     "fsh-sushi": "2.1.1"
   }
