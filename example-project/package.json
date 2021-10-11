@@ -1,5 +1,4 @@
 {
-  "name": "fhir-dev",
   "scripts": {
     "postinstall": "node download-jars.js",
     "build": "sushi .",
