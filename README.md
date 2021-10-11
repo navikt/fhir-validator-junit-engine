@@ -17,7 +17,7 @@ Execute the following in a terminal:
 java -jar junit-platform-console-standalone-1.8.1.jar -cp fhir-validator-junit-engine.jar:validator_cli.jar -f test.yaml
 ```
 
-See [example-project](example-project) for a working example.
+This process can be automated, e.g. using `npm`, see [example-project](example-project) for a working example.
 
 ![demo](docs/demo.gif)
 
