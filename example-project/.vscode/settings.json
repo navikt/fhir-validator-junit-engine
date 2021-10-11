@@ -6,6 +6,7 @@
             // The schema provides IntelliSense when editing json files containing fhir resources (e.g. StructureDefinition).
             "fileMatch": [
                 "ig/*.json",
+                "test-resources/*.json",
             ],
             "url": "https://www.hl7.org/fhir/fhir.schema.json"
         }
