@@ -4,15 +4,39 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Run FHIR Validator JUnit tests",
-      "type": "shell",
-      "command": "java",
-      "args": [
-        "-jar", "junit-platform-console-standalone-1.8.1.jar",
-        "-cp", "fhir-validator-junit-engine.jar:validator_cli.jar",
-        "-f", "test.yaml",
-        "--reports-dir", "test-reports"
-      ],
+      "type": "npm",
+      "script": "build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "clear": true
+      },
+      "problemMatcher": [
+        {
+          "fileLocation": "absolute",
+          "pattern": [
+            {
+              "regexp": "^(warn|error) (.+)$",
+              "severity": 1,
+              "message": 2
+            },
+            {
+              "regexp": "^  File: (.+)$",
+              "file": 1,
+            },
+            {
+              "regexp": "^  Line: (\\d+)$",
+              "line": 1,
+            }
+          ]
+        },
+      ]
+    },
+    {
+      "type": "npm",
+      "script": "test",
       "group": {
         "kind": "test",
         "isDefault": true
@@ -23,22 +47,14 @@
       "problemMatcher": []
     },
     {
-      "label": "Run FHIR Validator",
-      "type": "shell",
-      "command": "java",
-      "args": [
-        "-jar", "validator_cli.jar",
-        "${workspaceFolder}/test-resources",
-        "-version", "4.0",
-        "-tx", "n/a"
-      ],
+      "type": "npm",
+      "script": "validate",
       "presentation": {
         "clear": true
       },
       "problemMatcher": [
         {
           "source": "FHIR Validator",
-          "fileLocation": "absolute",
           "pattern": [
             {
               "regexp": "^-- (.+) -{5,}$",
@@ -48,10 +64,10 @@
               "regexp": "^.*$",
             },
             {
-              "regexp": "^  (.+) @ .+ \\(line ?(\\d+), col ?(\\d+)\\) : (.+)$",
+              "regexp": "^  ((?:Info|Warning|Error)).* \\(line ?(\\d+), col ?(\\d+)\\) : (.+)$",
               "severity": 1,
               "line": 2,
-              "column": 3,
+              //"column": 3,
               "message": 4,
               "loop": true
             }
