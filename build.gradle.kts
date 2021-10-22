@@ -49,7 +49,7 @@ tasks {
 }
 
 dependencies {
-    compileOnly("ca.uhn.hapi.fhir:org.hl7.fhir.validation:5.5.7")
+    compileOnly("ca.uhn.hapi.fhir:org.hl7.fhir.validation:5.5.8")
     compileOnly("org.junit.platform:junit-platform-engine:1.8.1")
     implementation("com.github.shyiko.klob:klob:0.2.1")
     implementation("com.sksamuel.hoplite:hoplite-json:1.4.9")
