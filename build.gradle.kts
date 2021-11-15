@@ -52,7 +52,7 @@ dependencies {
     compileOnly("ca.uhn.hapi.fhir:org.hl7.fhir.validation:5.5.9")
     compileOnly("org.junit.platform:junit-platform-engine:1.8.1")
     implementation("com.github.shyiko.klob:klob:0.2.1")
-    implementation("com.sksamuel.hoplite:hoplite-json:1.4.9")
+    implementation("com.sksamuel.hoplite:hoplite-json:1.4.14")
     implementation("com.sksamuel.hoplite:hoplite-yaml:1.4.9")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     testImplementation("org.junit.platform:junit-platform-testkit:1.8.1")
