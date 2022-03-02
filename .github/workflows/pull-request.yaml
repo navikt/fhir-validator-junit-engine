@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Linting (ktlint)
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Get latest ktlint download-url
         id: ktlint-latest
@@ -73,7 +73,7 @@ jobs:
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache FHIR Packages
         uses: actions/cache@v2
