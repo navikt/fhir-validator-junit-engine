@@ -61,7 +61,7 @@ jobs:
       # Therefore we will upload an artifact with the ktlint results
       - name: Upload artifact [ktlint-results] (dependabot)
         if: github.actor == 'dependabot[bot]'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ktlint-results
           path: build/ktlint-report-in-checkstyle-format.xml
@@ -102,7 +102,7 @@ jobs:
       # Therefore we will upload an artifact with the unit test results
       - name: Upload artifact [unit-test-results] (dependabot)
         if: github.actor == 'dependabot[bot]'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: unit-test-results
           path: '**/build/test-results/test/TEST-*.xml'
