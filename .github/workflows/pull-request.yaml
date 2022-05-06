@@ -89,7 +89,7 @@ jobs:
           cache: 'gradle'
 
       # Must login to gain access to docker.pkg.github.com/navikt/* images required by some integration-tests.
-      - uses: docker/login-action@v1
+      - uses: docker/login-action@v2
         with:
           registry: docker.pkg.github.com
           username: ${{ github.repository_owner }}
