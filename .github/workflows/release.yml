@@ -25,7 +25,7 @@ jobs:
       # Persist the FHIR Package Cache between runners, used by tests.
       # Doc: https://confluence.hl7.org/display/FHIR/FHIR+Package+Cache
       - name: 🗂️ Cache FHIR Packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           path: |
             ~/.fhir/packages
